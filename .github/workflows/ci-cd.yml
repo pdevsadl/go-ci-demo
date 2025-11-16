@@ -49,11 +49,14 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: ${{ env.GO_VERSION }}
-      - run: go build -o app ./cmd/app
-      - uses: actions/upload-artifact@v4 # ✅ updated version
+      - name: Build
+        working-directory: ./cmd/app
+        run: go build -o app .
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
         with:
           name: app-binary
-          path: app
+          path: ./cmd/app/app
 
   # ------------------------
   # Deploy to Railway
